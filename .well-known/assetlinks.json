@@ -1,0 +1,10 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "ro.declaropfa.app",
+    "sha256_cert_fingerprints": [
+      "0C:D8:68:6E:4F:F2:28:D1:D1:35:4D:58:0A:43:DA:A5:A2:C4:33:11:A4:C2:58:28:20:F2:91:65:A7:4C:92:8E"
+    ]
+  }
+}]
