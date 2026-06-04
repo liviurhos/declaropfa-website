@@ -53,7 +53,7 @@
     .nav-logo { font-family:var(--mono); font-weight:800; font-size:0.9rem; letter-spacing:0.04em; text-transform:uppercase; color:var(--fg); }
     .nav-logo em { font-style:normal; color:var(--accent); }
     .nav-right { display:flex; align-items:center; gap:1rem; }
-    .nav-pill { font-family:var(--mono); font-size:0.65rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; padding:4px 12px; border-radius:2px; border:1px solid var(--line-hi); color:var(--fg-3); }
+    .nav-pill { font-family:var(--mono); font-size:0.65rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; padding:4px 12px; border-radius:2px; border:1px solid var(--line-hi); color:var(--fg-2); }
     .theme-toggle { width:34px; height:34px; border:1px solid var(--line-hi); border-radius:3px; background:transparent; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:border-color 0.2s; }
     .theme-toggle:hover { border-color:var(--fg-2); }
     .theme-toggle svg { width:16px; height:16px; stroke:var(--fg-2); fill:none; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
@@ -128,20 +128,19 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      gap:40px;
+      gap:24px;
       padding:0 5%;
     }
 
-    /* phone mockup */
     .phone-mockup {
       position:relative;
-      width:240px;
+      width:170px;
       flex-shrink:0;
       transition: transform 0.4s var(--ease), opacity 0.4s;
     }
     .phone-mockup.side {
-      transform: scale(0.88);
-      opacity: 0.5;
+      transform: scale(0.85);
+      opacity: 0.4;
     }
     .phone-mockup.center {
       transform: scale(1);
@@ -150,11 +149,11 @@
     }
 
     .phone-frame {
-      width:240px;
-      border-radius:36px;
+      width:170px;
+      border-radius:26px;
       overflow:hidden;
       border:1px solid var(--line-hi);
-      box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px var(--line);
+      box-shadow: 0 28px 56px rgba(0,0,0,0.5), 0 0 0 1px var(--line);
       background:#000;
     }
     .phone-frame img {
@@ -163,49 +162,50 @@
     }
 
     .carousel-info {
-      max-width:320px;
+      max-width:260px;
       flex-shrink:0;
     }
     .carousel-info-num {
-      font-family:var(--mono); font-size:0.68rem;
+      font-family:var(--mono); font-size:0.65rem;
       letter-spacing:0.2em; text-transform:uppercase;
-      color:var(--fg-3); margin-bottom:1rem;
+      color:var(--fg-3); margin-bottom:0.875rem;
     }
     .carousel-info-title {
-      font-family:var(--mono); font-size:clamp(1.4rem,2.5vw,2rem);
+      font-family:var(--mono); font-size:clamp(1.2rem,2vw,1.6rem);
       font-weight:800; letter-spacing:-0.02em; line-height:1.1;
-      color:var(--fg); margin-bottom:1rem;
+      color:var(--fg); margin-bottom:0.875rem;
     }
     .carousel-info-desc {
-      font-size:0.9rem; line-height:1.75;
+      font-size:0.85rem; line-height:1.75;
       color:var(--fg-2); font-weight:300;
     }
 
     .carousel-controls {
       display:flex; align-items:center;
-      gap:1.5rem; padding:3rem 5% 0;
+      gap:1.5rem; padding:2.5rem 5% 0;
       max-width:1280px; margin:0 auto;
     }
     .carousel-btn {
-      width:44px; height:44px;
+      width:40px; height:40px;
       border:1px solid var(--line-hi); border-radius:3px;
       background:transparent; cursor:pointer;
       display:flex; align-items:center; justify-content:center;
       transition:border-color 0.2s;
+      flex-shrink:0;
     }
     .carousel-btn:hover { border-color:var(--fg-2); }
-    .carousel-btn svg { width:16px; height:16px; stroke:var(--fg-2); fill:none; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+    .carousel-btn svg { width:14px; height:14px; stroke:var(--fg-2); fill:none; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
 
     .carousel-dots { display:flex; gap:8px; }
     .carousel-dot {
-      width:24px; height:2px; background:var(--line-hi); cursor:pointer;
+      width:20px; height:2px; background:var(--line-hi); cursor:pointer;
       transition:background 0.2s, width 0.3s var(--ease);
     }
-    .carousel-dot.active { background:var(--fg); width:40px; }
+    .carousel-dot.active { background:var(--fg); width:36px; }
 
     .carousel-counter {
       font-family:var(--mono); font-size:0.68rem;
-      letter-spacing:0.12em; color:var(--fg-3);
+      letter-spacing:0.12em; color:var(--fg-2);
       margin-left:auto;
     }
 
@@ -243,9 +243,9 @@
     .footer-brand { font-family:var(--mono); font-size:0.72rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--fg-2); }
     .footer-brand em { font-style:normal; color:var(--accent); }
     .footer-links { list-style:none; display:flex; gap:2rem; }
-    .footer-links a { font-family:var(--mono); font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--fg-3); transition:color 0.2s; }
+    .footer-links a { font-family:var(--mono); font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--fg-2); transition:color 0.2s; }
     .footer-links a:hover { color:var(--fg); }
-    .footer-copy { font-family:var(--mono); font-size:0.65rem; letter-spacing:0.05em; color:var(--fg-3); }
+    .footer-copy { font-family:var(--mono); font-size:0.65rem; letter-spacing:0.05em; color:var(--fg-2); }
 
     @keyframes rise { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:none} }
     .r { opacity:0; transform:translateY(18px); transition:opacity 0.75s var(--ease), transform 0.75s var(--ease); }
