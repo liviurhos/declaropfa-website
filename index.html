@@ -1,1544 +1,565 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ro" data-theme="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DeclaRoPFA — Taxele tale PFA în 30 de secunde</title>
-    <meta
-      name="description"
-      content="Calculator taxe PFA 2026. CAS, CASS, impozit calculate instant. PDF Declarație Unică pre-completată. Reminder automat 25 mai."
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;800&family=Inter:wght@300;400;500&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      :root {
-        --accent: #4f8ef7;
-        --ease: cubic-bezier(0.16, 1, 0.3, 1);
-        --mono: "JetBrains Mono", monospace;
-        --sans: "Inter", system-ui, sans-serif;
-      }
-      [data-theme="dark"] {
-        --bg: #0a0a0a;
-        --bg-2: #111111;
-        --bg-3: #1a1a1a;
-        --line: rgba(255, 255, 255, 0.07);
-        --line-hi: rgba(255, 255, 255, 0.16);
-        --fg: #f0f0eb;
-        --fg-2: #b8b8b8;
-        --fg-3: #767676;
-        --nav-bg: rgba(10, 10, 10, 0.92);
-      }
-      [data-theme="light"] {
-        --bg: #f4f4f0;
-        --bg-2: #ebebeb;
-        --bg-3: #e0e0e0;
-        --line: rgba(0, 0, 0, 0.09);
-        --line-hi: rgba(0, 0, 0, 0.2);
-        --fg: #111111;
-        --fg-2: #444444;
-        --fg-3: #626262;
-        --nav-bg: rgba(244, 244, 240, 0.92);
-      }
-      *,
-      *::before,
-      *::after {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      html {
-        scroll-behavior: smooth;
-      }
-      body {
-        font-family: var(--sans);
-        background: var(--bg);
-        color: var(--fg);
-        overflow-x: hidden;
-        -webkit-font-smoothing: antialiased;
-        transition:
-          background 0.3s,
-          color 0.3s;
-      }
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-      body::before {
-        content: "";
-        position: fixed;
-        inset: 0;
-        z-index: 0;
-        pointer-events: none;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.022'/%3E%3C/svg%3E");
-      }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DeclaRoPFA — Taxele tale PFA în 30 de secunde</title>
+  <meta name="description" content="Calculator taxe PFA 2026. CAS, CASS, impozit calculate instant. PDF Declarație Unică pre-completată. Reminder automat 25 mai.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #4F8EF7;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Inter', system-ui, sans-serif;
+    }
+    [data-theme="dark"] {
+      --bg: #0a0a0a; --bg-2: #111111; --bg-3: #1a1a1a;
+      --line: rgba(255,255,255,0.07); --line-hi: rgba(255,255,255,0.16);
+      --fg: #f0f0eb; --fg-2: #b8b8b8; --fg-3: #767676;
+      --nav-bg: rgba(10,10,10,0.92);
+    }
+    [data-theme="light"] {
+      --bg: #f4f4f0; --bg-2: #ebebeb; --bg-3: #e0e0e0;
+      --line: rgba(0,0,0,0.09); --line-hi: rgba(0,0,0,0.2);
+      --fg: #111111; --fg-2: #444444; --fg-3: #626262;
+      --nav-bg: rgba(244,244,240,0.92);
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans); background: var(--bg); color: var(--fg);
+      overflow-x: hidden; -webkit-font-smoothing: antialiased;
+      transition: background 0.3s, color 0.3s;
+    }
+    a { color: inherit; text-decoration: none; }
+    body::before {
+      content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.022'/%3E%3C/svg%3E");
+    }
 
-      /* NAV */
-      nav {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 900;
-        height: 64px;
-        display: flex;
-        align-items: center;
-        padding: 0 5%;
-        border-bottom: 1px solid transparent;
-        transition:
-          transform 0.38s var(--ease),
-          border-color 0.3s,
-          background 0.3s;
-      }
-      nav.scrolled {
-        background: var(--nav-bg);
-        backdrop-filter: blur(14px);
-        border-color: var(--line);
-      }
-      nav.hide {
-        transform: translateY(-100%);
-      }
-      .nav-inner {
-        max-width: 1280px;
-        margin: 0 auto;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 2rem;
-      }
-      .nav-logo {
-        font-family: var(--mono);
-        font-weight: 800;
-        font-size: 0.9rem;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-        color: var(--fg);
-      }
-      .nav-logo em {
-        font-style: normal;
-        color: var(--accent);
-      }
-      .nav-right {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-      }
-      .nav-pill {
-        font-family: var(--mono);
-        font-size: 0.65rem;
-        font-weight: 600;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        padding: 4px 12px;
-        border-radius: 2px;
-        border: 1px solid var(--line-hi);
-        color: var(--fg-2);
-      }
-      .theme-toggle {
-        width: 34px;
-        height: 34px;
-        border: 1px solid var(--line-hi);
-        border-radius: 3px;
-        background: transparent;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: border-color 0.2s;
-      }
-      .theme-toggle:hover {
-        border-color: var(--fg-2);
-      }
-      .theme-toggle svg {
-        width: 16px;
-        height: 16px;
-        stroke: var(--fg-2);
-        fill: none;
-        stroke-width: 1.5;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-      }
-      .nav-cta {
-        font-family: var(--mono);
-        font-size: 0.72rem;
-        font-weight: 600;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: #fff;
-        background: var(--accent);
-        padding: 0.5rem 1.1rem;
-        border-radius: 2px;
-        transition: opacity 0.2s;
-      }
-      .nav-cta:hover {
-        opacity: 0.85;
-      }
+    /* NAV */
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:900; height:64px;
+      display:flex; align-items:center; padding:0 5%;
+      border-bottom:1px solid transparent;
+      transition: transform 0.38s var(--ease), border-color 0.3s, background 0.3s;
+    }
+    nav.scrolled { background:var(--nav-bg); backdrop-filter:blur(14px); border-color:var(--line); }
+    nav.hide { transform:translateY(-100%); }
+    .nav-inner { max-width:1280px; margin:0 auto; width:100%; display:flex; align-items:center; justify-content:space-between; gap:2rem; }
+    .nav-logo { font-family:var(--mono); font-weight:800; font-size:0.9rem; letter-spacing:0.04em; text-transform:uppercase; color:var(--fg); }
+    .nav-logo em { font-style:normal; color:var(--accent); }
+    .nav-right { display:flex; align-items:center; gap:1rem; }
+    .nav-pill { font-family:var(--mono); font-size:0.65rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; padding:4px 12px; border-radius:2px; border:1px solid var(--line-hi); color:var(--fg-2); }
+    .theme-toggle { width:34px; height:34px; border:1px solid var(--line-hi); border-radius:3px; background:transparent; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:border-color 0.2s; }
+    .theme-toggle:hover { border-color:var(--fg-2); }
+    .theme-toggle svg { width:16px; height:16px; stroke:var(--fg-2); fill:none; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+    .nav-cta { font-family:var(--mono); font-size:0.72rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:#fff; background:var(--accent); padding:0.5rem 1.1rem; border-radius:2px; transition:opacity 0.2s; }
+    .nav-cta:hover { opacity:0.85; }
 
-      /* HERO */
-      .hero {
-        position: relative;
-        z-index: 1;
-        min-height: 100svh;
-        display: grid;
-        grid-template-rows: 1fr auto;
-        padding: 0 5%;
-        border-bottom: 1px solid var(--line);
-      }
-      .hero-main {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        padding-top: 100px;
-        padding-bottom: 4rem;
-      }
-      .hero-kicker {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        font-family: var(--mono);
-        font-size: 0.68rem;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: var(--fg-3);
-        margin-bottom: 2rem;
-        opacity: 0;
-        animation: rise 1s var(--ease) forwards Xs;
-      }
-      .hero-kicker::before {
-        content: "";
-        display: block;
-        width: 20px;
-        height: 1px;
-        background: var(--accent);
-      }
-      h1 {
-        font-family: var(--mono);
-        font-size: clamp(2.8rem, 7vw, 7rem);
-        font-weight: 800;
-        line-height: 1;
-        letter-spacing: -0.03em;
-        max-width: 14ch;
-        color: var(--fg);
-        opacity: 0;
-        animation: rise 1s var(--ease) forwards Xs;
-      }
-      h1 b {
-        color: var(--accent);
-        font-weight: 800;
-      }
-      .hero-sub-row {
-        display: flex;
-        align-items: flex-end;
-        justify-content: space-between;
-        gap: 2rem;
-        margin-top: 3rem;
-        opacity: 0;
-        animation: rise 1s var(--ease) forwards Xs;
-      }
-      .hero-desc {
-        font-size: 1rem;
-        line-height: 1.75;
-        color: var(--fg-2);
-        max-width: 38ch;
-        font-weight: 300;
-      }
-      .hero-scroll {
-        font-family: var(--mono);
-        font-size: 0.65rem;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: var(--fg-3);
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        white-space: nowrap;
-      }
-      .hero-scroll::after {
-        content: "";
-        display: block;
-        width: 1px;
-        height: 40px;
-        background: var(--line-hi);
-        animation: breathe 2.2s ease-in-out infinite;
-      }
-      @keyframes breathe {
-        0%,
-        100% {
-          opacity: 1;
-          height: 40px;
-        }
-        50% {
-          opacity: 0.3;
-          height: 20px;
-        }
-      }
+    /* HERO */
+    .hero { position:relative; z-index:1; min-height:100svh; display:grid; grid-template-rows:1fr auto; padding:0 5%; border-bottom:1px solid var(--line); }
+    .hero-main { display:flex; flex-direction:column; justify-content:flex-end; padding-top:100px; padding-bottom:4rem; }
+    .hero-kicker {
+      display:flex; align-items:center; gap:0.75rem;
+      font-family:var(--mono); font-size:0.68rem; letter-spacing:0.2em;
+      text-transform:uppercase; color:var(--fg-3); margin-bottom:2rem;
+    }
+    .hero-kicker::before { content:''; display:block; width:20px; height:1px; background:var(--accent); }
+    h1 {
+      font-family:var(--mono); font-size:clamp(2.8rem,7vw,7rem);
+      font-weight:800; line-height:1.0; letter-spacing:-0.03em;
+      max-width:14ch; color:var(--fg);
+    }
+    h1 b { color:var(--accent); font-weight:800; }
+    .hero-sub-row { display:flex; align-items:flex-end; justify-content:space-between; gap:2rem; margin-top:3rem; }
+    .hero-desc { font-size:1rem; line-height:1.75; color:var(--fg-2); max-width:38ch; font-weight:300; }
+    .hero-scroll {
+      font-family:var(--mono); font-size:0.65rem; letter-spacing:0.18em;
+      text-transform:uppercase; color:var(--fg-3);
+      display:flex; align-items:center; gap:0.5rem; white-space:nowrap;
+    }
+    .hero-scroll::after {
+      content:''; display:block; width:1px; height:40px; background:var(--line-hi);
+    }
+    .store-btns { display:flex; gap:12px; flex-wrap:wrap; margin-top:2.5rem; }
+    .store-btn { display:inline-block; height:40px; transition:opacity 0.2s, transform 0.2s; }
+    .store-btn:hover { opacity:0.85; transform:translateY(-1px); }
+    .store-btn img { height:40px; width:auto; display:block; }
+    .hero-meta { display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--line); }
+    .hero-stat { padding:1.75rem 0; border-right:1px solid var(--line); text-align:center; }
+    .hero-stat:last-child { border-right:none; }
+    .hero-stat-n { font-family:var(--mono); font-size:1.8rem; font-weight:800; color:var(--fg); line-height:1; margin-bottom:0.35rem; }
+    .hero-stat-l { font-family:var(--mono); font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--fg-3); }
 
-      .store-btns {
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
-        margin-top: 2.5rem;
-        opacity: 0;
-        animation: rise 1s var(--ease) forwards Xs;
-      }
-      .store-btn {
-        display: inline-block;
-        height: 40px;
-        transition:
-          opacity 0.2s,
-          transform 0.2s;
-      }
-      .store-btn:hover {
-        opacity: 0.85;
-        transform: translateY(-1px);
-      }
-      .store-btn img {
-        height: 40px;
-        width: auto;
-        display: block;
-      }
+    /* SECTION */
+    .section { position:relative; z-index:1; padding:8rem 5%; border-bottom:1px solid var(--line); }
+    .container { max-width:1280px; margin:0 auto; }
+    .sec-header { display:flex; justify-content:space-between; align-items:flex-start; gap:3rem; margin-bottom:5rem; }
+    .sec-kicker { font-family:var(--mono); font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--fg-3); display:flex; align-items:center; gap:0.6rem; white-space:nowrap; margin-top:0.35rem; }
+    .sec-kicker::before { content:''; display:block; width:18px; height:1px; background:var(--fg-3); }
+    h2 { font-family:var(--mono); font-size:clamp(1.8rem,3.5vw,3rem); font-weight:800; line-height:1.1; letter-spacing:-0.03em; max-width:22ch; color:var(--fg); }
 
-      .hero-meta {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        border-top: 1px solid var(--line);
-        opacity: 0;
-        animation: rise 1s var(--ease) forwards Xs;
-      }
-      .hero-stat {
-        padding: 1.75rem 0;
-        border-right: 1px solid var(--line);
-        text-align: center;
-      }
-      .hero-stat:last-child {
-        border-right: none;
-      }
-      .hero-stat-n {
-        font-family: var(--mono);
-        font-size: 1.8rem;
-        font-weight: 800;
-        color: var(--fg);
-        line-height: 1;
-        margin-bottom: 0.35rem;
-      }
-      .hero-stat-l {
-        font-family: var(--mono);
-        font-size: 0.65rem;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: var(--fg-3);
-      }
+    /* FEATURES */
+    .feat-list { list-style:none; }
+    .feat-item { display:grid; grid-template-columns:3.5rem 1fr 1fr; gap:2rem; align-items:start; padding:2rem 0; border-top:1px solid var(--line); transition:border-color 0.3s; cursor:default; }
+    .feat-item:last-child { border-bottom:1px solid var(--line); }
+    .feat-item:hover { border-color:var(--line-hi); }
+    .feat-item:hover .feat-name { color:var(--fg); }
+    .feat-num { font-family:var(--mono); font-size:0.68rem; letter-spacing:0.1em; color:var(--fg-3); padding-top:0.25rem; }
+    .feat-name { font-family:var(--mono); font-size:clamp(1.1rem,2vw,1.6rem); font-weight:800; letter-spacing:-0.02em; line-height:1.15; color:var(--fg-2); transition:color 0.3s; }
+    .feat-desc { font-size:0.88rem; line-height:1.75; color:var(--fg-2); font-weight:300; max-width:42ch; padding-top:0.25rem; }
 
-      /* SECTION */
-      .section {
-        position: relative;
-        z-index: 1;
-        padding: 8rem 5%;
-        border-bottom: 1px solid var(--line);
-      }
-      .container {
-        max-width: 1280px;
-        margin: 0 auto;
-      }
-      .sec-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 3rem;
-        margin-bottom: 5rem;
-      }
-      .sec-kicker {
-        font-family: var(--mono);
-        font-size: 0.68rem;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: var(--fg-3);
-        display: flex;
-        align-items: center;
-        gap: 0.6rem;
-        white-space: nowrap;
-        margin-top: 0.35rem;
-      }
-      .sec-kicker::before {
-        content: "";
-        display: block;
-        width: 18px;
-        height: 1px;
-        background: var(--fg-3);
-      }
-      h2 {
-        font-family: var(--mono);
-        font-size: clamp(1.8rem, 3.5vw, 3rem);
-        font-weight: 800;
-        line-height: 1.1;
-        letter-spacing: -0.03em;
-        max-width: 22ch;
-        color: var(--fg);
-      }
+    /* CAROUSEL */
+    .carousel-section { position:relative; z-index:1; padding:8rem 0; border-bottom:1px solid var(--line); overflow:hidden; }
+    .carousel-header { padding:0 5%; max-width:1280px; margin:0 auto 4rem; }
+    .carousel-header .sec-kicker { margin-bottom:1rem; }
+    .carousel-viewport { position:relative; width:100%; overflow:hidden; }
+    .carousel-track { display:flex; transition:transform 0.6s var(--ease); will-change:transform; }
+    .carousel-slide { min-width:100%; display:flex; align-items:center; justify-content:center; gap:24px; padding:0 5%; }
+    .phone-mockup { position:relative; width:170px; flex-shrink:0; transition:transform 0.4s var(--ease), opacity 0.4s; }
+    .phone-mockup.side { transform:scale(0.85); opacity:0.4; }
+    .phone-mockup.center { transform:scale(1); opacity:1; z-index:2; }
+    .phone-frame { width:170px; border-radius:26px; overflow:hidden; border:1px solid var(--line-hi); box-shadow:0 28px 56px rgba(0,0,0,0.5), 0 0 0 1px var(--line); background:#000; }
+    .phone-frame img { width:100%; display:block; }
+    .carousel-info { max-width:260px; flex-shrink:0; }
+    .carousel-info-num { font-family:var(--mono); font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--fg-3); margin-bottom:0.875rem; }
+    .carousel-info-title { font-family:var(--mono); font-size:clamp(1.2rem,2vw,1.6rem); font-weight:800; letter-spacing:-0.02em; line-height:1.1; color:var(--fg); margin-bottom:0.875rem; }
+    .carousel-info-desc { font-size:0.85rem; line-height:1.75; color:var(--fg-2); font-weight:300; }
+    .carousel-controls { display:flex; align-items:center; gap:1.5rem; padding:2.5rem 5% 0; max-width:1280px; margin:0 auto; }
+    .carousel-btn { width:40px; height:40px; border:1px solid var(--line-hi); border-radius:3px; background:transparent; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:border-color 0.2s; flex-shrink:0; }
+    .carousel-btn:hover { border-color:var(--fg-2); }
+    .carousel-btn svg { width:14px; height:14px; stroke:var(--fg-2); fill:none; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+    .carousel-dots { display:flex; gap:8px; }
+    .carousel-dot { width:20px; height:2px; background:var(--line-hi); cursor:pointer; transition:background 0.2s, width 0.3s var(--ease); }
+    .carousel-dot.active { background:var(--fg); width:36px; }
+    .carousel-counter { font-family:var(--mono); font-size:0.68rem; letter-spacing:0.12em; color:var(--fg-2); margin-left:auto; }
 
-      /* FEATURES */
-      .feat-list {
-        list-style: none;
-      }
-      .feat-item {
-        display: grid;
-        grid-template-columns: 3.5rem 1fr 1fr;
-        gap: 2rem;
-        align-items: start;
-        padding: 2rem 0;
-        border-top: 1px solid var(--line);
-        transition: border-color 0.3s;
-        cursor: default;
-      }
-      .feat-item:last-child {
-        border-bottom: 1px solid var(--line);
-      }
-      .feat-item:hover {
-        border-color: var(--line-hi);
-      }
-      .feat-item:hover .feat-name {
-        color: var(--fg);
-      }
-      .feat-num {
-        font-family: var(--mono);
-        font-size: 0.68rem;
-        letter-spacing: 0.1em;
-        color: var(--fg-3);
-        padding-top: 0.25rem;
-        transition: color 0.3s;
-      }
-      .feat-name {
-        font-family: var(--mono);
-        font-size: clamp(1.1rem, 2vw, 1.6rem);
-        font-weight: 800;
-        letter-spacing: -0.02em;
-        line-height: 1.15;
-        color: var(--fg-2);
-        transition: color 0.3s;
-      }
-      .feat-desc {
-        font-size: 0.88rem;
-        line-height: 1.75;
-        color: var(--fg-2);
-        font-weight: 300;
-        max-width: 42ch;
-        padding-top: 0.25rem;
-      }
+    /* ROI */
+    .roi-grid { display:grid; grid-template-columns:1fr 1fr; gap:6rem; align-items:center; }
+    .roi-desc { font-size:0.95rem; line-height:1.8; color:var(--fg-2); font-weight:300; margin-top:1.5rem; }
+    .roi-points { display:flex; flex-direction:column; gap:1px; border:1px solid var(--line); background:var(--line); border-radius:4px; overflow:hidden; }
+    .roi-point { background:var(--bg-2); padding:1.75rem 2rem; }
+    .roi-point-title { font-family:var(--mono); font-size:0.85rem; font-weight:800; color:var(--fg); margin-bottom:0.4rem; }
+    .roi-point-desc { font-size:0.83rem; color:var(--fg-3); line-height:1.6; font-weight:300; }
 
-      /* CAROUSEL */
-      .carousel-section {
-        position: relative;
-        z-index: 1;
-        padding: 8rem 0;
-        border-bottom: 1px solid var(--line);
-        overflow: hidden;
-      }
-      .carousel-header {
-        padding: 0 5%;
-        max-width: 1280px;
-        margin: 0 auto 4rem;
-      }
-      .carousel-header .sec-kicker {
-        margin-bottom: 1rem;
-      }
+    /* CONTACT */
+    .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:8rem; align-items:start; }
+    .contact-tag { font-family:var(--mono); font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--fg-3); margin-bottom:1.25rem; }
+    .contact-title { font-family:var(--mono); font-size:clamp(1.8rem,3.5vw,3rem); font-weight:800; line-height:1.1; letter-spacing:-0.03em; color:var(--fg); margin-bottom:2rem; }
+    .contact-info { font-size:0.88rem; color:var(--fg-2); line-height:2; font-weight:300; }
+    .f-field { margin-bottom:1rem; }
+    .f-field label { display:block; font-family:var(--mono); font-size:0.65rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--fg-3); margin-bottom:0.5rem; }
+    .f-field input, .f-field select, .f-field textarea { width:100%; background:var(--bg-2); border:1px solid var(--line); border-radius:3px; color:var(--fg); font-family:var(--sans); font-size:0.9rem; font-weight:300; padding:0.85rem 1rem; transition:border-color 0.2s; resize:none; appearance:none; outline:none; }
+    .f-field input::placeholder, .f-field textarea::placeholder { color:var(--fg-3); }
+    .f-field input:focus, .f-field select:focus, .f-field textarea:focus { border-color:var(--line-hi); }
+    .f-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .f-submit { margin-top:0.75rem; display:flex; align-items:center; gap:1rem; }
+    .btn-send { font-family:var(--mono); font-size:0.72rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; padding:0.85rem 2rem; border-radius:2px; border:none; cursor:pointer; background:var(--accent); color:#fff; transition:opacity 0.2s, transform 0.2s; }
+    .btn-send:hover { opacity:0.85; transform:translateY(-1px); }
+    .btn-send:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
+    .f-note { font-size:0.75rem; color:var(--fg-3); font-family:var(--mono); }
+    .f-status { margin-top:0.875rem; font-size:0.78rem; padding:0.75rem 1rem; border-radius:3px; display:none; font-family:var(--mono); }
+    .f-status.ok { background:rgba(79,142,247,0.07); border:1px solid rgba(79,142,247,0.2); color:var(--accent); }
+    .f-status.err { background:rgba(255,80,80,0.06); border:1px solid rgba(255,80,80,0.18); color:#ff7070; }
 
-      .carousel-viewport {
-        position: relative;
-        width: 100%;
-        overflow: hidden;
-      }
+    /* FOOTER */
+    footer { position:relative; z-index:1; padding:2.5rem 5%; border-top:1px solid var(--line); }
+    .footer-inner { max-width:1280px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:2rem; flex-wrap:wrap; }
+    .footer-brand { font-family:var(--mono); font-size:0.72rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--fg-2); }
+    .footer-brand em { font-style:normal; color:var(--accent); }
+    .footer-links { list-style:none; display:flex; gap:2rem; }
+    .footer-links a { font-family:var(--mono); font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--fg-2); transition:color 0.2s; }
+    .footer-links a:hover { color:var(--fg); }
+    .footer-copy { font-family:var(--mono); font-size:0.65rem; letter-spacing:0.05em; color:var(--fg-2); }
 
-      .carousel-track {
-        display: flex;
-        transition: transform 0.6s var(--ease);
-        will-change: transform;
-      }
+    @media(max-width:960px){
+      .roi-grid { grid-template-columns:1fr; gap:3rem; }
+      .contact-grid { grid-template-columns:1fr; gap:4rem; }
+      .sec-header { flex-direction:column; gap:1.25rem; }
+      .hero-sub-row { flex-direction:column; align-items:flex-start; gap:1.25rem; }
+      .feat-item { grid-template-columns:3rem 1fr; }
+      .feat-desc { display:none; }
+      .carousel-info { display:none; }
+      .phone-mockup.side { display:none; }
+    }
+    @media(max-width:640px){
+      .nav-pill, .nav-cta { display:none; }
+      .hero-meta { grid-template-columns:1fr 1fr; }
+      .hero-stat:last-child { display:none; }
+      .f-row { grid-template-columns:1fr; }
+      .store-btns { flex-direction:column; }
+      .store-btn img { height:44px; }
+      .footer-inner { flex-direction:column; gap:1.25rem; text-align:center; }
+      .footer-links { justify-content:center; flex-wrap:wrap; }
+      .phone-frame { width:200px; }
+      .phone-mockup { width:200px; }
+    }
+  </style>
+</head>
+<body>
 
-      .carousel-slide {
-        min-width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 24px;
-        padding: 0 5%;
-      }
+<nav id="nav">
+  <div class="nav-inner">
+    <span class="nav-logo">Decla<em>Ro</em>PFA</span>
+    <div class="nav-right">
+      <span class="nav-pill">PFA · 2026</span>
+      <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme">
+        <svg id="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg id="icon-moon" viewBox="0 0 24 24" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <a href="#contact" class="nav-cta">Contact</a>
+    </div>
+  </div>
+</nav>
 
-      .phone-mockup {
-        position: relative;
-        width: 170px;
-        flex-shrink: 0;
-        transition:
-          transform 0.4s var(--ease),
-          opacity 0.4s;
-      }
-      .phone-mockup.side {
-        transform: scale(0.85);
-        opacity: 0.4;
-      }
-      .phone-mockup.center {
-        transform: scale(1);
-        opacity: 1;
-        z-index: 2;
-      }
+<main>
 
-      .phone-frame {
-        width: 170px;
-        border-radius: 26px;
-        overflow: hidden;
-        border: 1px solid var(--line-hi);
-        box-shadow:
-          0 28px 56px rgba(0, 0, 0, 0.5),
-          0 0 0 1px var(--line);
-        background: #000;
-      }
-      .phone-frame img {
-        width: 100%;
-        display: block;
-      }
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-main">
+    <div class="hero-kicker">Calculator taxe · România · 2026</div>
+    <h1>Taxele tale PFA<br>în <b>30 de secunde.</b></h1>
+    <div class="hero-sub-row">
+      <p class="hero-desc">CAS, CASS, impozit calculate instant. PDF Declarație Unică pre-completată. Reminder automat înainte de 25 mai.</p>
+      <span class="hero-scroll" aria-hidden="true">Scroll</span>
+    </div>
+    <div class="store-btns">
+      <a href="#" class="store-btn"><img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play"></a>
+      <a href="#" class="store-btn"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store"></a>
+    </div>
+  </div>
+  <div class="hero-meta">
+    <div class="hero-stat"><div class="hero-stat-n">500K+</div><div class="hero-stat-l">PFA-uri active</div></div>
+    <div class="hero-stat"><div class="hero-stat-n">30s</div><div class="hero-stat-l">Timp la rezultat</div></div>
+    <div class="hero-stat"><div class="hero-stat-n">0</div><div class="hero-stat-l">Cunoștințe fiscale</div></div>
+  </div>
+</section>
 
-      .carousel-info {
-        max-width: 260px;
-        flex-shrink: 0;
-      }
-      .carousel-info-num {
-        font-family: var(--mono);
-        font-size: 0.65rem;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: var(--fg-3);
-        margin-bottom: 0.875rem;
-      }
-      .carousel-info-title {
-        font-family: var(--mono);
-        font-size: clamp(1.2rem, 2vw, 1.6rem);
-        font-weight: 800;
-        letter-spacing: -0.02em;
-        line-height: 1.1;
-        color: var(--fg);
-        margin-bottom: 0.875rem;
-      }
-      .carousel-info-desc {
-        font-size: 0.85rem;
-        line-height: 1.75;
-        color: var(--fg-2);
-        font-weight: 300;
-      }
+<!-- FEATURES -->
+<section class="section" id="features">
+  <div class="container">
+    <div class="sec-header">
+      <span class="sec-kicker">Funcționalități</span>
+      <h2>Tot ce ai nevoie<br>ca PFA în România.</h2>
+    </div>
+    <ul class="feat-list">
+      <li class="feat-item">
+        <span class="feat-num">01</span>
+        <span class="feat-name">Calculator instant</span>
+        <span class="feat-desc">CAS, CASS și impozitul calculate în timp real cu logică fiscală 2026.</span>
+      </li>
+      <li class="feat-item">
+        <span class="feat-num">02</span>
+        <span class="feat-name">PFA vs SRL Micro</span>
+        <span class="feat-desc">Compară instant cele două forme juridice și vezi exact cât economisești.</span>
+      </li>
+      <li class="feat-item">
+        <span class="feat-num">03</span>
+        <span class="feat-name">PDF Declarație Unică</span>
+        <span class="feat-desc">Export PDF pre-completat. Deschide SPV pe anaf.ro și confirmă.</span>
+      </li>
+      <li class="feat-item">
+        <span class="feat-num">04</span>
+        <span class="feat-name">Remindere automate</span>
+        <span class="feat-desc">Notificări cu 30, 15 și 5 zile înainte de 25 mai și termenul bonificației.</span>
+      </li>
+      <li class="feat-item">
+        <span class="feat-num">05</span>
+        <span class="feat-name">Bonificație 3%</span>
+        <span class="feat-desc">Plătești până pe 15 aprilie și economisești sute de RON. Calculat automat.</span>
+      </li>
+      <li class="feat-item">
+        <span class="feat-num">06</span>
+        <span class="feat-name">Evidență lunară</span>
+        <span class="feat-desc">Urmărești veniturile lună cu lună și știi mereu cât pui deoparte.</span>
+      </li>
+    </ul>
+  </div>
+</section>
 
-      .carousel-controls {
-        display: flex;
-        align-items: center;
-        gap: 1.5rem;
-        padding: 2.5rem 5% 0;
-        max-width: 1280px;
-        margin: 0 auto;
-      }
-      .carousel-btn {
-        width: 40px;
-        height: 40px;
-        border: 1px solid var(--line-hi);
-        border-radius: 3px;
-        background: transparent;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: border-color 0.2s;
-        flex-shrink: 0;
-      }
-      .carousel-btn:hover {
-        border-color: var(--fg-2);
-      }
-      .carousel-btn svg {
-        width: 14px;
-        height: 14px;
-        stroke: var(--fg-2);
-        fill: none;
-        stroke-width: 1.5;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-      }
+<!-- CAROUSEL -->
+<section class="carousel-section">
+  <div class="carousel-header">
+    <div class="sec-kicker">Aplicația</div>
+    <h2 style="margin-top:1rem">Simplu.<br>Rapid. Real.</h2>
+  </div>
+  <div class="carousel-viewport">
+    <div class="carousel-track" id="carouselTrack">
 
-      .carousel-dots {
-        display: flex;
-        gap: 8px;
-      }
-      .carousel-dot {
-        width: 20px;
-        height: 2px;
-        background: var(--line-hi);
-        cursor: pointer;
-        transition:
-          background 0.2s,
-          width 0.3s var(--ease);
-      }
-      .carousel-dot.active {
-        background: var(--fg);
-        width: 36px;
-      }
+      <div class="carousel-slide">
+        <div class="phone-mockup side"><div class="phone-frame"><img src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2085.PNG" alt="" loading="lazy"></div></div>
+        <div class="phone-mockup center"><div class="phone-frame"><img src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2080.PNG" alt="Acasă" loading="lazy"></div></div>
+        <div class="carousel-info">
+          <div class="carousel-info-num">01 — Acasă</div>
+          <div class="carousel-info-title">Dashboard<br>complet</div>
+          <div class="carousel-info-desc">Countdown până la termenul declarației, ultimul calcul salvat, acțiuni rapide și pragurile fiscale 2026 — totul dintr-o privire.</div>
+        </div>
+        <div class="phone-mockup side"><div class="phone-frame"><img src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2081.PNG" alt="" loading="lazy"></div></div>
+      </div>
 
-      .carousel-counter {
-        font-family: var(--mono);
-        font-size: 0.68rem;
-        letter-spacing: 0.12em;
-        color: var(--fg-2);
-        margin-left: auto;
-      }
+      <div class="carousel-slide">
+        <div class="phone-mockup side"><div class="phone-frame"><img src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2080.PNG" alt="" loading="lazy"></div></div>
+        <div class="phone-mockup center"><div class="phone-frame"><img src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2081.PNG" alt="Calculator" loading="lazy"></div></div>
+        <div class="carousel-info">
+          <div class="carousel-info-num">02 — Calculator</div>
+          <div class="carousel-info-title">Taxe calculate<br>instant</div>
+          <div class="carousel-info-desc">Introdu venitul și cheltuielile. CAS, CASS și impozitul apar imediat. Opțiuni pentru salariați și pensionari incluși.</div>
+        </div>
+        <div class="phone-mockup side"><div class="phone-frame"><img src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2082.PNG" alt="" loading="lazy"></div></div>
+      </div>
 
-      /* ROI */
-      .roi-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 6rem;
-        align-items: center;
-      }
-      .roi-desc {
-        font-size: 0.95rem;
-        line-height: 1.8;
-        color: var(--fg-2);
-        font-weight: 300;
-        margin-top: 1.5rem;
-      }
-      .roi-points {
-        display: flex;
-        flex-direction: column;
-        gap: 1px;
-        border: 1px solid var(--line);
-        background: var(--line);
-        border-radius: 4px;
-        overflow: hidden;
-      }
-      .roi-point {
-        background: var(--bg-2);
-        padding: 1.75rem 2rem;
-      }
-      .roi-point-title {
-        font-family: var(--mono);
-        font-size: 0.85rem;
-        font-weight: 800;
-        color: var(--fg);
-        margin-bottom: 0.4rem;
-      }
-      .roi-point-desc {
-        font-size: 0.83rem;
-        color: var(--fg-3);
-        line-height: 1.6;
-        font-weight: 300;
-      }
+      <div class="carousel-slide">
+        <div class="phone-mockup side"><div class="phone-frame"><img src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2081.PNG" alt="" loading="lazy"></div></div>
+        <div class="phone-mockup center"><div class="phone-frame"><img src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2082.PNG" alt="Comparator" loading="lazy"></div></div>
+        <div class="carousel-info">
+          <div class="carousel-info-num">03 — Compară</div>
+          <div class="carousel-info-title">PFA sau<br>SRL Micro?</div>
+          <div class="carousel-info-desc">Introdu venitul și compară instant taxele și venitul net final pentru ambele forme juridice. Aplicația recomandă varianta optimă.</div>
+        </div>
+        <div class="phone-mockup side"><div class="phone-frame"><img src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2083.PNG" alt="" loading="lazy"></div></div>
+      </div>
 
-      /* CONTACT */
-      .contact-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 8rem;
-        align-items: start;
-      }
-      .contact-tag {
-        font-family: var(--mono);
-        font-size: 0.68rem;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: var(--fg-3);
-        margin-bottom: 1.25rem;
-      }
-      .contact-title {
-        font-family: var(--mono);
-        font-size: clamp(1.8rem, 3.5vw, 3rem);
-        font-weight: 800;
-        line-height: 1.1;
-        letter-spacing: -0.03em;
-        color: var(--fg);
-        margin-bottom: 2rem;
-      }
-      .contact-info {
-        font-size: 0.88rem;
-        color: var(--fg-2);
-        line-height: 2;
-        font-weight: 300;
-      }
-      .f-field {
-        margin-bottom: 1rem;
-      }
-      .f-field label {
-        display: block;
-        font-family: var(--mono);
-        font-size: 0.65rem;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: var(--fg-3);
-        margin-bottom: 0.5rem;
-      }
-      .f-field input,
-      .f-field select,
-      .f-field textarea {
-        width: 100%;
-        background: var(--bg-2);
-        border: 1px solid var(--line);
-        border-radius: 3px;
-        color: var(--fg);
-        font-family: var(--sans);
-        font-size: 0.9rem;
-        font-weight: 300;
-        padding: 0.85rem 1rem;
-        transition: border-color 0.2s;
-        resize: none;
-        appearance: none;
-        outline: none;
-      }
-      .f-field input::placeholder,
-      .f-field textarea::placeholder {
-        color: var(--fg-3);
-      }
-      .f-field input:focus,
-      .f-field select:focus,
-      .f-field textarea:focus {
-        border-color: var(--line-hi);
-      }
-      .f-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-      }
-      .f-submit {
-        margin-top: 0.75rem;
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-      }
-      .btn-send {
-        font-family: var(--mono);
-        font-size: 0.72rem;
-        font-weight: 600;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        padding: 0.85rem 2rem;
-        border-radius: 2px;
-        border: none;
-        cursor: pointer;
-        background: var(--accent);
-        color: #fff;
-        transition:
-          opacity 0.2s,
-          transform 0.2s;
-      }
-      .btn-send:hover {
-        opacity: 0.85;
-        transform: translateY(-1px);
-      }
-      .btn-send:disabled {
-        opacity: 0.4;
-        cursor: not-allowed;
-        transform: none;
-      }
-      .f-note {
-        font-size: 0.75rem;
-        color: var(--fg-3);
-        font-family: var(--mono);
-      }
-      .f-status {
-        margin-top: 0.875rem;
-        font-size: 0.78rem;
-        padding: 0.75rem 1rem;
-        border-radius: 3px;
-        display: none;
-        font-family: var(--mono);
-      }
-      .f-status.ok {
-        background: rgba(79, 142, 247, 0.07);
-        border: 1px solid rgba(79, 142, 247, 0.2);
-        color: var(--accent);
-      }
-      .f-status.err {
-        background: rgba(255, 80, 80, 0.06);
-        border: 1px solid rgba(255, 80, 80, 0.18);
-        color: #ff7070;
-      }
+      <div class="carousel-slide">
+        <div class="phone-mockup side"><div class="phone-frame"><img src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2082.PNG" alt="" loading="lazy"></div></div>
+        <div class="phone-mockup center"><div class="phone-frame"><img src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2083.PNG" alt="Evidenta" loading="lazy"></div></div>
+        <div class="carousel-info">
+          <div class="carousel-info-num">04 — Evidență</div>
+          <div class="carousel-info-title">Venituri lună<br>cu lună</div>
+          <div class="carousel-info-desc">Introduce venitul și cheltuielile lunar. Aplicația calculează taxele estimate și cât rămâi cu adevărat.</div>
+        </div>
+        <div class="phone-mockup side"><div class="phone-frame"><img src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2084.PNG" alt="" loading="lazy"></div></div>
+      </div>
 
-      /* FOOTER */
-      footer {
-        position: relative;
-        z-index: 1;
-        padding: 2.5rem 5%;
-        border-top: 1px solid var(--line);
-      }
-      .footer-inner {
-        max-width: 1280px;
-        margin: 0 auto;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 2rem;
-        flex-wrap: wrap;
-      }
-      .footer-brand {
-        font-family: var(--mono);
-        font-size: 0.72rem;
-        font-weight: 600;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        color: var(--fg-2);
-      }
-      .footer-brand em {
-        font-style: normal;
-        color: var(--accent);
-      }
-      .footer-links {
-        list-style: none;
-        display: flex;
-        gap: 2rem;
-      }
-      .footer-links a {
-        font-family: var(--mono);
-        font-size: 0.68rem;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--fg-2);
-        transition: color 0.2s;
-      }
-      .footer-links a:hover {
-        color: var(--fg);
-      }
-      .footer-copy {
-        font-family: var(--mono);
-        font-size: 0.65rem;
-        letter-spacing: 0.05em;
-        color: var(--fg-2);
-      }
+      <div class="carousel-slide">
+        <div class="phone-mockup side"><div class="phone-frame"><img src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2083.PNG" alt="" loading="lazy"></div></div>
+        <div class="phone-mockup center"><div class="phone-frame"><img src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2084.PNG" alt="Istoric" loading="lazy"></div></div>
+        <div class="carousel-info">
+          <div class="carousel-info-num">05 — Istoric</div>
+          <div class="carousel-info-title">Calcule<br>salvate automat</div>
+          <div class="carousel-info-desc">Ultimele 20 de calcule salvate automat. Poți revedea, compara sau șterge oricând. Funcție Premium.</div>
+        </div>
+        <div class="phone-mockup side"><div class="phone-frame"><img src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2085.PNG" alt="" loading="lazy"></div></div>
+      </div>
 
-      .r {
-        opacity: 1;
-        transform: none;
-      }
-      .r-d1 {
-      }
-      .r-d2 {
-      }
+      <div class="carousel-slide">
+        <div class="phone-mockup side"><div class="phone-frame"><img src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2084.PNG" alt="" loading="lazy"></div></div>
+        <div class="phone-mockup center"><div class="phone-frame"><img src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2085.PNG" alt="Profil" loading="lazy"></div></div>
+        <div class="carousel-info">
+          <div class="carousel-info-num">06 — Profil</div>
+          <div class="carousel-info-title">Datele tale<br>pe documente</div>
+          <div class="carousel-info-desc">Numele, CUI-ul și județul apar automat pe toate PDF-urile exportate. Remindere fiscale activate cu un singur tap.</div>
+        </div>
+        <div class="phone-mockup side"><div class="phone-frame"><img src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2080.PNG" alt="" loading="lazy"></div></div>
+      </div>
 
-      @media (max-width: 960px) {
-        .roi-grid {
-          grid-template-columns: 1fr;
-          gap: 3rem;
-        }
-        .contact-grid {
-          grid-template-columns: 1fr;
-          gap: 4rem;
-        }
-        .sec-header {
-          flex-direction: column;
-          gap: 1.25rem;
-        }
-        .hero-sub-row {
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 1.25rem;
-        }
-        .feat-item {
-          grid-template-columns: 3rem 1fr;
-        }
-        .feat-desc {
-          display: none;
-        }
-        .carousel-slide {
-          gap: 24px;
-        }
-        .carousel-info {
-          display: none;
-        }
-        .phone-mockup.side {
-          display: none;
-        }
-      }
-      @media (max-width: 640px) {
-        .nav-pill,
-        .nav-cta {
-          display: none;
-        }
-        .hero-meta {
-          grid-template-columns: 1fr 1fr;
-        }
-        .hero-stat:last-child {
-          display: none;
-        }
-        .f-row {
-          grid-template-columns: 1fr;
-        }
-        .store-btns {
-          flex-direction: column;
-        }
-        .store-btn img {
-          height: 44px;
-        }
-        .footer-inner {
-          flex-direction: column;
-          gap: 1.25rem;
-          text-align: center;
-        }
-        .footer-links {
-          justify-content: center;
-          flex-wrap: wrap;
-        }
-        .phone-frame {
-          width: 200px;
-        }
-        .phone-mockup {
-          width: 200px;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <nav id="nav">
-      <div class="nav-inner">
-        <span class="nav-logo">Decla<em>Ro</em>PFA</span>
-        <div class="nav-right">
-          <span class="nav-pill">PFA · 2026</span>
-          <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme">
-            <svg id="icon-sun" viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="5" />
-              <line x1="12" y1="1" x2="12" y2="3" />
-              <line x1="12" y1="21" x2="12" y2="23" />
-              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-              <line x1="1" y1="12" x2="3" y2="12" />
-              <line x1="21" y1="12" x2="23" y2="12" />
-              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-            </svg>
-            <svg id="icon-moon" viewBox="0 0 24 24" style="display: none">
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-            </svg>
-          </button>
-          <a href="#contact" class="nav-cta">Contact</a>
+    </div>
+  </div>
+  <div class="carousel-controls">
+    <button class="carousel-btn" id="prevBtn" aria-label="Anterior">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button class="carousel-btn" id="nextBtn" aria-label="Următor">
+      <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+    <div class="carousel-dots" id="carouselDots"></div>
+    <div class="carousel-counter" id="carouselCounter">1 / 6</div>
+  </div>
+</section>
+
+<!-- ROI -->
+<section class="section">
+  <div class="container">
+    <div class="roi-grid">
+      <div>
+        <span class="sec-kicker">De ce merită</span>
+        <h2 style="margin-top:1.25rem">Mai puțin decât<br>o oră de consultanță.</h2>
+        <p class="roi-desc">DeclaRoPFA costă mai puțin decât o singură oră cu un contabil — și îl ai disponibil oricând, de pe orice telefon.</p>
+      </div>
+      <div class="roi-points">
+        <div class="roi-point">
+          <div class="roi-point-title">Bonificație 3% — nu o rata</div>
+          <div class="roi-point-desc">Plătești taxele până pe 15 aprilie și economisești sute de RON. DeclaRoPFA te alertează automat și calculează exact cât câștigi.</div>
+        </div>
+        <div class="roi-point">
+          <div class="roi-point-title">Declarație Unică în minute</div>
+          <div class="roi-point-desc">PDF pre-completat cu datele tale, gata de comparat cu ce a completat ANAF automat în SPV. Fără erori, fără calcule manuale.</div>
+        </div>
+        <div class="roi-point">
+          <div class="roi-point-title">Premium · 9,99 RON/lună</div>
+          <div class="roi-point-desc">Sau 69 RON pe an. Calculatorul de bază rămâne gratuit pentru totdeauna.</div>
         </div>
       </div>
-    </nav>
+    </div>
+  </div>
+</section>
 
-    <main>
-      <!-- HERO -->
-      <section class="hero">
-        <div class="hero-main">
-          <div class="hero-kicker">Calculator taxe · România · 2026</div>
-          <h1>Taxele tale PFA<br />în <b>30 de secunde.</b></h1>
-          <div class="hero-sub-row">
-            <p class="hero-desc">
-              CAS, CASS, impozit calculate instant. PDF Declarație Unică
-              pre-completată. Reminder automat înainte de 25 mai.
-            </p>
-            <span class="hero-scroll" aria-hidden="true">Scroll</span>
-          </div>
-          <div class="store-btns">
-            <a href="#" class="store-btn">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
-                alt="Get it on Google Play"
-              />
-            </a>
-            <a href="#" class="store-btn">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg"
-                alt="Download on the App Store"
-              />
-            </a>
-          </div>
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div>
+        <p class="contact-tag">Contact</p>
+        <h2 class="contact-title">Scrie-ne.<br>Îți răspundem.</h2>
+        <div class="contact-info">
+          <p>Ai o întrebare despre aplicație, o sugestie sau ai găsit o problemă?</p>
+          <br>
+          <p>Îți răspundem în maxim 48 de ore.</p>
         </div>
-        <div class="hero-meta">
-          <div class="hero-stat">
-            <div class="hero-stat-n">500K+</div>
-            <div class="hero-stat-l">PFA-uri active</div>
-          </div>
-          <div class="hero-stat">
-            <div class="hero-stat-n">30s</div>
-            <div class="hero-stat-l">Timp la rezultat</div>
-          </div>
-          <div class="hero-stat">
-            <div class="hero-stat-n">0</div>
-            <div class="hero-stat-l">Cunoștințe fiscale</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- FEATURES -->
-      <section class="section" id="features">
-        <div class="container">
-          <div class="sec-header r">
-            <span class="sec-kicker">Funcționalități</span>
-            <h2>Tot ce ai nevoie<br />ca PFA în România.</h2>
-          </div>
-          <ul class="feat-list">
-            <li class="feat-item r">
-              <span class="feat-num">01</span>
-              <span class="feat-name">Calculator instant</span>
-              <span class="feat-desc"
-                >CAS, CASS și impozitul calculate în timp real cu logică fiscală
-                2026.</span
-              >
-            </li>
-            <li class="feat-item r r-d1">
-              <span class="feat-num">02</span>
-              <span class="feat-name">PFA vs SRL Micro</span>
-              <span class="feat-desc"
-                >Compară instant cele două forme juridice și vezi exact cât
-                economisești.</span
-              >
-            </li>
-            <li class="feat-item r r-d2">
-              <span class="feat-num">03</span>
-              <span class="feat-name">PDF Declarație Unică</span>
-              <span class="feat-desc"
-                >Export PDF pre-completat. Deschide SPV pe anaf.ro și
-                confirmă.</span
-              >
-            </li>
-            <li class="feat-item r">
-              <span class="feat-num">04</span>
-              <span class="feat-name">Remindere automate</span>
-              <span class="feat-desc"
-                >Notificări cu 30, 15 și 5 zile înainte de 25 mai și termenul
-                bonificației.</span
-              >
-            </li>
-            <li class="feat-item r r-d1">
-              <span class="feat-num">05</span>
-              <span class="feat-name">Bonificație 3%</span>
-              <span class="feat-desc"
-                >Plătești până pe 15 aprilie și economisești sute de RON.
-                Calculat automat.</span
-              >
-            </li>
-            <li class="feat-item r r-d2">
-              <span class="feat-num">06</span>
-              <span class="feat-name">Evidență lunară</span>
-              <span class="feat-desc"
-                >Urmărești veniturile lună cu lună și știi mereu cât pui
-                deoparte.</span
-              >
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- CAROUSEL -->
-      <section class="carousel-section">
-        <div class="carousel-header r">
-          <div class="sec-kicker">Aplicația</div>
-          <h2 style="margin-top: 1rem">Simplu.<br />Rapid. Real.</h2>
-        </div>
-
-        <div class="carousel-viewport">
-          <div class="carousel-track" id="carouselTrack">
-            <!-- Slide 1 -->
-            <div class="carousel-slide">
-              <div class="phone-mockup side" data-offset="-1">
-                <div class="phone-frame">
-                  <img
-                    src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2085.PNG"
-                    alt=""
-                  />
-                </div>
-              </div>
-              <div class="phone-mockup center">
-                <div class="phone-frame">
-                  <img
-                    src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2080.PNG"
-                    alt="Acasă"
-                  />
-                </div>
-              </div>
-              <div class="carousel-info">
-                <div class="carousel-info-num">01 — Acasă</div>
-                <div class="carousel-info-title">Dashboard<br />complet</div>
-                <div class="carousel-info-desc">
-                  Countdown până la termenul declarației, ultimul calcul salvat,
-                  acțiuni rapide și pragurile fiscale 2026 — totul dintr-o
-                  privire.
-                </div>
-              </div>
-              <div class="phone-mockup side" data-offset="1">
-                <div class="phone-frame">
-                  <img
-                    src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2081.PNG"
-                    alt=""
-                  />
-                </div>
-              </div>
-            </div>
-
-            <!-- Slide 2 -->
-            <div class="carousel-slide">
-              <div class="phone-mockup side">
-                <div class="phone-frame">
-                  <img
-                    src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2080.PNG"
-                    alt=""
-                  />
-                </div>
-              </div>
-              <div class="phone-mockup center">
-                <div class="phone-frame">
-                  <img
-                    src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2081.PNG"
-                    alt="Calculator"
-                  />
-                </div>
-              </div>
-              <div class="carousel-info">
-                <div class="carousel-info-num">02 — Calculator</div>
-                <div class="carousel-info-title">
-                  Taxe calculate<br />instant
-                </div>
-                <div class="carousel-info-desc">
-                  Introdu venitul și cheltuielile. CAS, CASS și impozitul apar
-                  imediat. Opțiuni pentru salariați și pensionari incluși.
-                </div>
-              </div>
-              <div class="phone-mockup side">
-                <div class="phone-frame">
-                  <img
-                    src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2082.PNG"
-                    alt=""
-                  />
-                </div>
-              </div>
-            </div>
-
-            <!-- Slide 3 -->
-            <div class="carousel-slide">
-              <div class="phone-mockup side">
-                <div class="phone-frame">
-                  <img
-                    src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2081.PNG"
-                    alt=""
-                  />
-                </div>
-              </div>
-              <div class="phone-mockup center">
-                <div class="phone-frame">
-                  <img
-                    src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2082.PNG"
-                    alt="Comparator"
-                  />
-                </div>
-              </div>
-              <div class="carousel-info">
-                <div class="carousel-info-num">03 — Compară</div>
-                <div class="carousel-info-title">PFA sau<br />SRL Micro?</div>
-                <div class="carousel-info-desc">
-                  Introdu venitul și compară instant taxele și venitul net final
-                  pentru ambele forme juridice. Aplicația recomandă varianta
-                  optimă.
-                </div>
-              </div>
-              <div class="phone-mockup side">
-                <div class="phone-frame">
-                  <img
-                    src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2083.PNG"
-                    alt=""
-                  />
-                </div>
-              </div>
-            </div>
-
-            <!-- Slide 4 -->
-            <div class="carousel-slide">
-              <div class="phone-mockup side">
-                <div class="phone-frame">
-                  <img
-                    src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2082.PNG"
-                    alt=""
-                  />
-                </div>
-              </div>
-              <div class="phone-mockup center">
-                <div class="phone-frame">
-                  <img
-                    src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2083.PNG"
-                    alt="Evidenta"
-                  />
-                </div>
-              </div>
-              <div class="carousel-info">
-                <div class="carousel-info-num">04 — Evidență</div>
-                <div class="carousel-info-title">
-                  Venituri lună<br />cu lună
-                </div>
-                <div class="carousel-info-desc">
-                  Introduce venitul lunar și cheltuielile anuale. Aplicația
-                  calculează taxele estimate și cât rămâi cu adevărat.
-                </div>
-              </div>
-              <div class="phone-mockup side">
-                <div class="phone-frame">
-                  <img
-                    src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2084.PNG"
-                    alt=""
-                  />
-                </div>
-              </div>
-            </div>
-
-            <!-- Slide 5 -->
-            <div class="carousel-slide">
-              <div class="phone-mockup side">
-                <div class="phone-frame">
-                  <img
-                    src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2083.PNG"
-                    alt=""
-                  />
-                </div>
-              </div>
-              <div class="phone-mockup center">
-                <div class="phone-frame">
-                  <img
-                    src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2084.PNG"
-                    alt="Istoric"
-                  />
-                </div>
-              </div>
-              <div class="carousel-info">
-                <div class="carousel-info-num">05 — Istoric</div>
-                <div class="carousel-info-title">
-                  Calcule<br />salvate automat
-                </div>
-                <div class="carousel-info-desc">
-                  Ultimele 20 de calcule salvate automat. Poți revedea, compara
-                  sau șterge oricând. Funcție Premium.
-                </div>
-              </div>
-              <div class="phone-mockup side">
-                <div class="phone-frame">
-                  <img
-                    src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2085.PNG"
-                    alt=""
-                  />
-                </div>
-              </div>
-            </div>
-
-            <!-- Slide 6 -->
-            <div class="carousel-slide">
-              <div class="phone-mockup side">
-                <div class="phone-frame">
-                  <img
-                    src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2084.PNG"
-                    alt=""
-                  />
-                </div>
-              </div>
-              <div class="phone-mockup center">
-                <div class="phone-frame">
-                  <img
-                    src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2085.PNG"
-                    alt="Profil"
-                  />
-                </div>
-              </div>
-              <div class="carousel-info">
-                <div class="carousel-info-num">06 — Profil</div>
-                <div class="carousel-info-title">
-                  Datele tale<br />pe documente
-                </div>
-                <div class="carousel-info-desc">
-                  Numele, CUI-ul și județul apar automat pe toate PDF-urile
-                  exportate. Remindere fiscale activate cu un singur tap.
-                </div>
-              </div>
-              <div class="phone-mockup side">
-                <div class="phone-frame">
-                  <img
-                    src="https://raw.githubusercontent.com/liviurhos/declaropfa-website/main/screenshots/IMG_2080.PNG"
-                    alt=""
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="carousel-controls">
-          <button class="carousel-btn" id="prevBtn" aria-label="Anterior">
-            <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6" /></svg>
-          </button>
-          <button class="carousel-btn" id="nextBtn" aria-label="Următor">
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6" /></svg>
-          </button>
-          <div class="carousel-dots" id="carouselDots"></div>
-          <div class="carousel-counter" id="carouselCounter">1 / 6</div>
-        </div>
-      </section>
-
-      <!-- ROI -->
-      <section class="section">
-        <div class="container">
-          <div class="roi-grid">
-            <div class="r">
-              <span class="sec-kicker">De ce merită</span>
-              <h2 style="margin-top: 1.25rem">
-                Mai puțin decât<br />o oră de consultanță.
-              </h2>
-              <p class="roi-desc">
-                DeclaRoPFA costă mai puțin decât o singură oră cu un contabil —
-                și îl ai disponibil oricând, de pe orice telefon.
-              </p>
-            </div>
-            <div class="roi-points r r-d1">
-              <div class="roi-point">
-                <div class="roi-point-title">Bonificație 3% — nu o rata</div>
-                <div class="roi-point-desc">
-                  Plătești taxele până pe 15 aprilie și economisești sute de
-                  RON. DeclaRoPFA te alertează automat și calculează exact cât
-                  câștigi.
-                </div>
-              </div>
-              <div class="roi-point">
-                <div class="roi-point-title">Declarație Unică în minute</div>
-                <div class="roi-point-desc">
-                  PDF pre-completat cu datele tale, gata de comparat cu ce a
-                  completat ANAF automat în SPV. Fără erori, fără calcule
-                  manuale.
-                </div>
-              </div>
-              <div class="roi-point">
-                <div class="roi-point-title">Premium · 9,99 RON/lună</div>
-                <div class="roi-point-desc">
-                  Sau 69 RON pe an. Calculatorul de bază rămâne gratuit pentru
-                  totdeauna.
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- CONTACT -->
-      <section class="section" id="contact">
-        <div class="container">
-          <div class="contact-grid">
-            <div class="r">
-              <p class="contact-tag">Contact</p>
-              <h2 class="contact-title">Scrie-ne.<br />Îți răspundem.</h2>
-              <div class="contact-info">
-                <p>
-                  Ai o întrebare despre aplicație, o sugestie sau ai găsit o
-                  problemă?
-                </p>
-                <br />
-                <p>Îți răspundem în maxim 48 de ore.</p>
-              </div>
-            </div>
-            <div class="r r-d1">
-              <form id="contactForm">
-                <div class="f-row">
-                  <div class="f-field">
-                    <label for="fn">Nume</label>
-                    <input
-                      type="text"
-                      id="fn"
-                      name="name"
-                      placeholder="Ion Popescu"
-                      required
-                    />
-                  </div>
-                  <div class="f-field">
-                    <label for="fe">Email</label>
-                    <input
-                      type="email"
-                      id="fe"
-                      name="email"
-                      placeholder="ion@email.ro"
-                      required
-                    />
-                  </div>
-                </div>
-                <div class="f-field">
-                  <label for="fs">Subiect</label>
-                  <select id="fs" name="subject" required>
-                    <option value="">Selectează subiectul</option>
-                    <option>Problemă tehnică</option>
-                    <option>Sugestie funcționalitate</option>
-                    <option>Întrebare fiscală</option>
-                    <option>Abonament Premium</option>
-                    <option>Altele</option>
-                  </select>
-                </div>
-                <div class="f-field">
-                  <label for="fm">Mesaj</label>
-                  <textarea
-                    id="fm"
-                    name="message"
-                    rows="5"
-                    placeholder="Descrie problema sau sugestia ta..."
-                    required
-                  ></textarea>
-                </div>
-                <div class="f-submit">
-                  <button type="submit" class="btn-send" id="submitBtn">
-                    Trimite mesajul
-                  </button>
-                  <span class="f-note">Răspundem în maxim 48h.</span>
-                </div>
-                <div id="fStatus" class="f-status"></div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer>
-      <div class="footer-inner">
-        <span class="footer-brand">Decla<em>Ro</em>PFA</span>
-        <ul class="footer-links">
-          <li><a href="privacy.html">Confidențialitate</a></li>
-          <li><a href="terms.html">Termeni</a></li>
-          <li>
-            <a href="https://innovationhubstudio.co.uk"
-              >Innovation Hub Studio</a
-            >
-          </li>
-        </ul>
-        <span class="footer-copy">© 2026 Innovation Hub Studio Ltd.</span>
       </div>
-    </footer>
+      <div>
+        <form id="contactForm">
+          <div class="f-row">
+            <div class="f-field">
+              <label for="fn">Nume</label>
+              <input type="text" id="fn" name="name" placeholder="Ion Popescu" required>
+            </div>
+            <div class="f-field">
+              <label for="fe">Email</label>
+              <input type="email" id="fe" name="email" placeholder="ion@email.ro" required>
+            </div>
+          </div>
+          <div class="f-field">
+            <label for="fs">Subiect</label>
+            <select id="fs" name="subject" required>
+              <option value="">Selectează subiectul</option>
+              <option>Problemă tehnică</option>
+              <option>Sugestie funcționalitate</option>
+              <option>Întrebare fiscală</option>
+              <option>Abonament Premium</option>
+              <option>Altele</option>
+            </select>
+          </div>
+          <div class="f-field">
+            <label for="fm">Mesaj</label>
+            <textarea id="fm" name="message" rows="5" placeholder="Descrie problema sau sugestia ta..." required></textarea>
+          </div>
+          <div class="f-submit">
+            <button type="submit" class="btn-send" id="submitBtn">Trimite mesajul</button>
+            <span class="f-note">Răspundem în maxim 48h.</span>
+          </div>
+          <div id="fStatus" class="f-status"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <script>
-      /* NAV */
-      (function () {
-        const nav = document.getElementById("nav");
-        let last = 0;
-        window.addEventListener(
-          "scroll",
-          () => {
-            const y = window.scrollY;
-            nav.classList.toggle("scrolled", y > 40);
-            nav.classList.toggle("hide", y > last && y > 100);
-            last = y;
-          },
-          { passive: true },
-        );
-      })();
+</main>
 
-      /* THEME */
-      (function () {
-        const html = document.documentElement;
-        const btn = document.getElementById("themeBtn");
-        const sun = document.getElementById("icon-sun");
-        const moon = document.getElementById("icon-moon");
-        const saved = localStorage.getItem("theme") || "dark";
-        function apply(t) {
-          html.setAttribute("data-theme", t);
-          sun.style.display = t === "dark" ? "block" : "none";
-          moon.style.display = t === "light" ? "block" : "none";
-          localStorage.setItem("theme", t);
-        }
-        apply(saved);
-        btn.addEventListener("click", () =>
-          apply(html.getAttribute("data-theme") === "dark" ? "light" : "dark"),
-        );
-      })();
+<footer>
+  <div class="footer-inner">
+    <span class="footer-brand">Decla<em>Ro</em>PFA</span>
+    <ul class="footer-links">
+      <li><a href="privacy.html">Confidențialitate</a></li>
+      <li><a href="terms.html">Termeni</a></li>
+      <li><a href="https://innovationhubstudio.co.uk">Innovation Hub Studio</a></li>
+    </ul>
+    <span class="footer-copy">© 2026 Innovation Hub Studio Ltd.</span>
+  </div>
+</footer>
 
-      /* CAROUSEL */
-      (function () {
-        const track = document.getElementById("carouselTrack");
-        const dotsContainer = document.getElementById("carouselDots");
-        const counter = document.getElementById("carouselCounter");
-        const total = 6;
-        let current = 0;
-        let autoTimer;
+<script>
+/* NAV */
+(function(){
+  const nav = document.getElementById('nav'); let last = 0;
+  window.addEventListener('scroll', ()=>{
+    const y = window.scrollY;
+    nav.classList.toggle('scrolled', y > 40);
+    nav.classList.toggle('hide', y > last && y > 100);
+    last = y;
+  }, {passive:true});
+})();
 
-        // Build dots
-        for (let i = 0; i < total; i++) {
-          const d = document.createElement("div");
-          d.className = "carousel-dot" + (i === 0 ? " active" : "");
-          d.addEventListener("click", () => goTo(i));
-          dotsContainer.appendChild(d);
-        }
+/* THEME */
+(function(){
+  const html = document.documentElement;
+  const btn = document.getElementById('themeBtn');
+  const sun = document.getElementById('icon-sun');
+  const moon = document.getElementById('icon-moon');
+  const saved = localStorage.getItem('theme') || 'dark';
+  function apply(t){
+    html.setAttribute('data-theme', t);
+    sun.style.display = t === 'dark' ? 'block' : 'none';
+    moon.style.display = t === 'light' ? 'block' : 'none';
+    localStorage.setItem('theme', t);
+  }
+  apply(saved);
+  btn.addEventListener('click', ()=> apply(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+})();
 
-        function goTo(idx) {
-          current = (idx + total) % total;
-          track.style.transform = `translateX(-${current * 100}%)`;
-          dotsContainer.querySelectorAll(".carousel-dot").forEach((d, i) => {
-            d.classList.toggle("active", i === current);
-          });
-          counter.textContent = `${current + 1} / ${total}`;
-          resetAuto();
-        }
+/* CAROUSEL */
+(function(){
+  const track = document.getElementById('carouselTrack');
+  const dotsContainer = document.getElementById('carouselDots');
+  const counter = document.getElementById('carouselCounter');
+  const total = 6;
+  let current = 0;
+  let autoTimer;
 
-        function resetAuto() {
-          clearInterval(autoTimer);
-          autoTimer = setInterval(() => goTo(current + 1), 5000);
-        }
+  for(let i = 0; i < total; i++){
+    const d = document.createElement('div');
+    d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', ()=> goTo(i));
+    dotsContainer.appendChild(d);
+  }
 
-        document
-          .getElementById("prevBtn")
-          .addEventListener("click", () => goTo(current - 1));
-        document
-          .getElementById("nextBtn")
-          .addEventListener("click", () => goTo(current + 1));
+  function goTo(idx){
+    current = (idx + total) % total;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    dotsContainer.querySelectorAll('.carousel-dot').forEach((d,i)=>{
+      d.classList.toggle('active', i === current);
+    });
+    counter.textContent = `${current + 1} / ${total}`;
+    resetAuto();
+  }
 
-        // Touch/swipe
-        let touchStartX = 0;
-        track.addEventListener(
-          "touchstart",
-          (e) => {
-            touchStartX = e.touches[0].clientX;
-          },
-          { passive: true },
-        );
-        track.addEventListener(
-          "touchend",
-          (e) => {
-            const diff = touchStartX - e.changedTouches[0].clientX;
-            if (Math.abs(diff) > 50) goTo(diff > 0 ? current + 1 : current - 1);
-          },
-          { passive: true },
-        );
+  function resetAuto(){
+    clearInterval(autoTimer);
+    autoTimer = setInterval(()=> goTo(current + 1), 5000);
+  }
 
-        // Keyboard
-        document.addEventListener("keydown", (e) => {
-          if (e.key === "ArrowLeft") goTo(current - 1);
-          if (e.key === "ArrowRight") goTo(current + 1);
-        });
+  document.getElementById('prevBtn').addEventListener('click', ()=> goTo(current - 1));
+  document.getElementById('nextBtn').addEventListener('click', ()=> goTo(current + 1));
 
-        resetAuto();
-      })();
+  let touchStartX = 0;
+  track.addEventListener('touchstart', e=>{ touchStartX = e.touches[0].clientX; }, {passive:true});
+  track.addEventListener('touchend', e=>{
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if(Math.abs(diff) > 50) goTo(diff > 0 ? current + 1 : current - 1);
+  }, {passive:true});
 
-      /* FORM */
-      document
-        .getElementById("contactForm")
-        .addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const btn = document.getElementById("submitBtn");
-          const st = document.getElementById("fStatus");
-          btn.disabled = true;
-          btn.textContent = "Se trimite…";
-          st.style.display = "none";
-          try {
-            const res = await fetch("https://formspree.io/f/mjgavyqr", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                name: document.getElementById("fn").value,
-                email: document.getElementById("fe").value,
-                subject: document.getElementById("fs").value,
-                message: document.getElementById("fm").value,
-              }),
-            });
-            if (!res.ok) throw 0;
-            st.className = "f-status ok";
-            st.textContent = "Mesaj trimis. Îți răspundem în maxim 48h.";
-            e.target.reset();
-          } catch {
-            st.className = "f-status err";
-            st.textContent = "Eroare la trimitere. Încearcă din nou.";
-          } finally {
-            st.style.display = "block";
-            btn.disabled = false;
-            btn.textContent = "Trimite mesajul";
-          }
-        });
-    </script>
-  </body>
+  document.addEventListener('keydown', e=>{
+    if(e.key === 'ArrowLeft') goTo(current - 1);
+    if(e.key === 'ArrowRight') goTo(current + 1);
+  });
+
+  resetAuto();
+})();
+
+/* FORM */
+document.getElementById('contactForm').addEventListener('submit', async e=>{
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  const st = document.getElementById('fStatus');
+  btn.disabled=true; btn.textContent='Se trimite…'; st.style.display='none';
+  try {
+    const res = await fetch('https://formspree.io/f/mjgavyqr', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ name:document.getElementById('fn').value, email:document.getElementById('fe').value, subject:document.getElementById('fs').value, message:document.getElementById('fm').value })
+    });
+    if(!res.ok) throw 0;
+    st.className='f-status ok'; st.textContent='Mesaj trimis. Îți răspundem în maxim 48h.';
+    e.target.reset();
+  } catch {
+    st.className='f-status err'; st.textContent='Eroare la trimitere. Încearcă din nou.';
+  } finally {
+    st.style.display='block'; btn.disabled=false; btn.textContent='Trimite mesajul';
+  }
+});
+</script>
+</body>
 </html>
