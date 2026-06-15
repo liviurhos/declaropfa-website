@@ -1,0 +1,21 @@
+# DeclaRoPFA
+
+> Calculator taxe PFA România 2026. CAS, CASS, impozit calculate instant.
+
+DeclaRoPFA este o aplicație mobilă care ajută freelancerii români (PFA) să calculeze taxele anuale (CAS, CASS, impozit pe venit), să compare PFA vs SRL Micro, să exporte PDF pre-completat pentru Declarația Unică și să primească remindere înainte de termenul de 25 mai.
+
+Funcționalități: calculator instant, comparator PFA vs SRL Micro, export PDF Declarație Unică, remindere automate 30/15/5 zile, bonificație 3%, evidență lunară venituri și cheltuieli.
+
+Prețuri: gratuit (calculator de bază), Premium 9.99 RON/lună sau 69 RON/an.
+
+Disponibil: Android și iOS (în curând).
+
+Dezvoltat de: Innovation Hub Studio Ltd (innovationhubstudio.co.uk)
+
+Contact: declaropfa.ro/#contact
+
+## Pagini
+
+- [Site principal](https://declaropfa.ro/): prezentare aplicație, funcționalități, întrebări frecvente despre taxele PFA
+- [Politică de confidențialitate](https://declaropfa.ro/privacy.html)
+- [Termeni și condiții](https://declaropfa.ro/terms.html)
